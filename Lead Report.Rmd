@@ -12,6 +12,11 @@ library(kableExtra)
 library(tidyverse)
 #read in data
 lead_data <- read_csv("lead-iq-01.csv")
+#correct the IQ outlier value from 999 to 99
+lead_data <- lead_data %>%
+  mutate(
+    IQ = ifelse(IQ == 999, 99, IQ)
+  )
 ```
 
 
@@ -49,4 +54,4 @@ iq_summary %>%
 
 The boxplot displays the distribution of IQ scores for children living near and far from the lead smelter. Although most IQ scores fall within a typical range, the child in the “Far” group with an IQ of 999 strongly stretches the vertical scale and visually squeezes the remainder of the data. Aside from this extreme value, the central tendency appears slightly higher in the Far group than in the Near group.
 
-The table summarizing the IQ measurements supports this observation. The mean IQ among children living **far** from the smelter is `r round(iq_summary$Mean_IQ[iq_summary$Smelter=="Far"], 2)`, whereas the mean among those living **near** the smelter is `r round(iq_summary$Mean_IQ[iq_summary$Smelter=="Near"], 2)`. The variability is much larger in the Far group (SD = `r round(iq_summary$SD_IQ[iq_summary$Smelter=="Far"], 2)`) compared to the Near group (SD = `r round(iq_summary$SD_IQ[iq_summary$Smelter=="Near"], 2)`), primarily due to the extreme outlier. Minimum and maximum values in the table further illustrate this difference, with the Far group ranging from `r iq_summary$Min_IQ[iq_summary$Smelter=="Far"]` to `r iq_summary$Max_IQ[iq_summary$Smelter=="Far"]`, while the Near group spans a narrower range from `r iq_summary$Min_IQ[iq_summary$Smelter=="Near"]` to `r iq_summary$Max_IQ[iq_summary$Smelter=="Near"]`.
+The table summarizing the IQ measurements supports this observation. The mean IQ among children living **far** from the smelter is `r round(iq_summary$Mean_IQ[iq_summary$Smelter=="Far"], 2)`, whereas the mean among those living **near** the smelter is `r round(iq_summary$Mean_IQ[iq_summary$Smelter=="Near"], 2)`. The variability is much larger in the Far group (SD = `r round(iq_summary$SD_IQ[iq_summary$Smelter=="Far"], 2)`) compared to the Near group (SD = `r round(iq_summary$SD_IQ[iq_summary$Smelter=="Near"], 2)`), primarily due to the extreme outlier [outlier has been removed but I will keep the text as is since interpretations do not change and to demonstrate the flexibility of inline calculations]. Minimum and maximum values in the table further illustrate this difference, with the Far group ranging from `r iq_summary$Min_IQ[iq_summary$Smelter=="Far"]` to `r iq_summary$Max_IQ[iq_summary$Smelter=="Far"]`, while the Near group spans a narrower range from `r iq_summary$Min_IQ[iq_summary$Smelter=="Near"]` to `r iq_summary$Max_IQ[iq_summary$Smelter=="Near"]`.
